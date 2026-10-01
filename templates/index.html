@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ta">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff4ec">
+  <title>Namma Seva AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Namma Seva AI home">
+        <span class="brand-mark" aria-hidden="true">N</span>
+        <span>Namma Seva AI</span>
+      </a>
+      <div class="header-tools">
+        <span class="topbar-note" id="topbar-note">அரசு சேவைகளுக்கான உங்கள் எளிய வழிகாட்டி</span>
+        <label class="language-picker">
+          <span class="visually-hidden" id="language-label">மொழி</span>
+          <select id="language-select" aria-label="மொழி">
+            <option value="ta" selected>தமிழ்</option>
+            <option value="hi">हिन्दी</option>
+            <option value="te">తెలుగు</option>
+            <option value="bn">বাংলা</option>
+          </select>
+        </label>
+      </div>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow" id="intro-eyebrow">அரசு சேவைகள் · எளிய தமிழ்</p>
+      <h1 id="page-title">வணக்கம், Namma Seva AI.</h1>
+      <p class="intro-copy" id="intro-copy">அரசு சேவைகளைப் புரிந்துகொண்டு அடுத்த படியைத் தெரிந்துகொள்ள நான் உதவுகிறேன்.</p>
+    </section>
+
+    <section class="ask-panel" aria-labelledby="ask-title">
+      <div class="panel-heading">
+        <span class="step-number" aria-hidden="true">01</span>
+        <div>
+          <h2 id="ask-title">உங்களுக்கு என்ன உதவி வேண்டும்?</h2>
+          <p id="ask-hint">உங்கள் கேள்வியைத் தமிழில் எழுதுங்கள் அல்லது சொல்லுங்கள்.</p>
+        </div>
+      </div>
+      <form id="question-form">
+        <label class="visually-hidden" id="question-label" for="question">உங்கள் கேள்வி</label>
+        <textarea id="question" name="question" rows="3" maxlength="1000" placeholder="எனக்கு ரேஷன் கார்டு வேண்டும்" required></textarea>
+        <div class="form-actions">
+          <button class="button button-voice" id="voice-button" type="button" aria-pressed="false">
+            <span class="mic-icon" aria-hidden="true">●</span>
+            <span id="voice-label">பேசித் தேடுங்கள்</span>
+          </button>
+          <button class="button button-submit" id="submit-button" type="submit">
+            <span id="submit-label">வழிகாட்டுங்கள்</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+        <p class="voice-status" id="voice-status" aria-live="polite"></p>
+      </form>
+      <div class="examples" id="examples" aria-label="மாதிரி கேள்விகள்">
+        <span id="examples-label">உதாரணம்</span>
+        <button type="button" class="example-button" data-question="எனக்கு ரேஷன் கார்டு வேண்டும்">ரேஷன் கார்டு</button>
+        <button type="button" class="example-button" data-question="விதவை உதவித்தொகை பற்றி தெரிந்து கொள்ள வேண்டும்">விதவை உதவி</button>
+        <button type="button" class="example-button" data-question="அரசு கல்வி உதவித்தொகை எப்படி பெறுவது?">கல்வி உதவித்தொகை</button>
+        <button type="button" class="example-button" data-question="எனக்கு பிறப்பு சான்றிதழ் வேண்டும்">பிறப்பு சான்றிதழ்</button>
+        <button type="button" class="example-button" data-question="என் அம்மாவுக்கு முதியோர் ஓய்வூதியம் வேண்டும்">முதியோர் ஓய்வூதியம்</button>
+        <button type="button" class="example-button" data-question="எனக்கு அரசு மருத்துவ உதவி வேண்டும்">மருத்துவ உதவி</button>
+      </div>
+    </section>
+
+    <section class="answer-panel" id="answer-panel" aria-live="polite" aria-busy="false" hidden>
+      <div class="answer-heading">
+        <div>
+          <p class="eyebrow" id="answer-eyebrow">உங்களுக்கான வழிகாட்டல்</p>
+          <h2 id="answer-title"></h2>
+        </div>
+        <button class="button button-speak" id="speak-button" type="button" aria-label="பதிலைச் சத்தமாகப் படிக்கவும்">
+          <span aria-hidden="true">◖</span> <span id="speak-label">கேளுங்கள்</span>
+        </button>
+      </div>
+      <p class="sample-note" id="sample-note">மாதிரி வழிகாட்டல் · அதிகாரப்பூர்வ அரசு தகவல் அல்ல</p>
+      <div id="answer-content" class="answer-content"></div>
+    </section>
+
+    <aside class="notice" role="note">
+      <span class="notice-mark" aria-hidden="true">i</span>
+      <p id="notice-copy">இது ஒரு முன்மாதிரி. தகவல்கள் மாதிரி மட்டுமே; தற்போதைய விதிகளை அருகிலுள்ள அரசு அலுவலகத்தில் உறுதிப்படுத்துங்கள்.</p>
+    </aside>
+
+    <footer id="footer-copy">உங்கள் கேள்வி இந்தச் சாதனத்தில் இருந்து வழிகாட்டலுக்காக மட்டுமே பயன்படுத்தப்படுகிறது.</footer>
+  </main>
+</body>
+</html>
